@@ -19,9 +19,9 @@ debug = true
 tokio = { version = "1.*", features = ["rt-multi-thread", "signal"] }
 turn = "0.8"
 webrtc-util = { version = "0.9", default-features = false, features = ["conn", "vnet"] }
-jsonwebtoken = "9.3"
 sha3 = "0.10"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 prometheus = "0.13"
 lazy_static = "1.5"
+libturms = { git = "https://github.com/TurmsApp/libturms" }
