@@ -1,5 +1,6 @@
 use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt};
 
+/// Init tracing logic.
 pub fn init_tracing() {
     let fmt_layer = fmt::layer()
         .with_file(true)
