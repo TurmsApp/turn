@@ -9,17 +9,17 @@ use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 
 /// Init tracing logic.
-pub fn init_logging(otel: &str) -> Result<(), LogError> {
-    let logging_layer = setup_logging(otel)?;
+pub fn init_logging(otel: Option<String>) -> Result<(), LogError> {
+    let fmt_layer = fmt::layer().with_file(true).with_line_number(true);
 
-    let fmt_layer = fmt::layer()
-        .with_file(true)
-        .with_line_number(true);
+    let sub = tracing_subscriber::registry().with(fmt_layer);
 
-    tracing_subscriber::registry()
-        .with(fmt_layer)
-        .with(logging_layer)
-        .init();
+    if let Some(addr) = otel {
+        let logging_layer = setup_logging(&addr)?;
+        sub.with(logging_layer).init();
+    } else {
+        sub.init();
+    }
 
     Ok(())
 }

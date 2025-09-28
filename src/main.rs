@@ -26,10 +26,8 @@ use webrtc_util::vnet::net::*;
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     // Init logging.
-    logger::init_logging(
-        &std::env::var("OTEL_URL").unwrap_or("http://localhost:4317".into()),
-    )
-    .expect("cannot create logging endpoint");
+    logger::init_logging(std::env::var("OTEL_URL").ok())
+        .expect("cannot create logging endpoint");
     // Init Prometheus metrics.
     metrics::register_custom_metrics();
 
