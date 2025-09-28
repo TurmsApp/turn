@@ -1,7 +1,7 @@
 //! Handle authentification logic.
 
-use libturms::error::Error as TurmsError;
-use libturms::jwt::*;
+//use libturms:: as TurmsError;
+use libturms::discover::jwt::*;
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::path::Path;
@@ -43,8 +43,8 @@ impl Authenticator {
     pub fn public_key<P: AsRef<Path>>(
         &mut self,
         key: Key<P>,
-    ) -> Result<(), TurmsError> {
-        self.token_manager = Some(TokenManager::new(None, key)?);
+    ) -> Result<(), ()> {
+        self.token_manager = Some(TokenManager::new(None, key).unwrap());
         Ok(())
     }
 

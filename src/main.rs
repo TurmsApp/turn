@@ -7,7 +7,7 @@ mod metrics;
 
 use authentication::string_to_algorithm;
 use authentication::Authenticator;
-use libturms::jwt::Key;
+use libturms::discover::jwt::Key;
 use std::env;
 use std::fs;
 use std::net::IpAddr;
@@ -25,8 +25,11 @@ use webrtc_util::vnet::net::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    // Init tracing (as logger).
-    logger::init_tracing();
+    // Init logging.
+    logger::init_logging(
+        &std::env::var("OTEL_URL").unwrap_or("http://localhost:4317".into()),
+    )
+    .expect("cannot create logging endpoint");
     // Init Prometheus metrics.
     metrics::register_custom_metrics();
 

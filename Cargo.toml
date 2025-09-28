@@ -11,17 +11,19 @@ panic = "abort"
 strip = true
 debug = false
 
-[profile.dev]
-opt-level = "z"
-debug = true
-
 [dependencies]
-tokio = { version = "1.*", features = ["rt-multi-thread", "signal"] }
-turn = "0.8"
-webrtc-util = { version = "0.9", default-features = false, features = ["conn", "vnet"] }
+tokio = { version = "1", features = ["rt-multi-thread", "signal"] }
+turn = "0.11"
+webrtc-util = { version = "0.12", default-features = false, features = ["conn", "vnet"] }
 sha3 = "0.10"
 tracing = "0.1"
-tracing-subscriber = "0.3"
-prometheus = "0.13"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+prometheus = "0.14"
 lazy_static = "1.5"
-libturms = { git = "https://github.com/TurmsApp/libturms" }
+libturms = { git = "https://github.com/TurmsApp/libturms#8661096" }
+opentelemetry = { version = "0.28.0", features = ["trace"] }
+opentelemetry_sdk = "0.28.0"
+opentelemetry-otlp = { version="0.28.0",  features = ["grpc-tonic", "metrics"] }
+opentelemetry-appender-tracing = "0.28.1"
+thiserror = "2.0.16"
+tracing-opentelemetry = "0.31.0"
