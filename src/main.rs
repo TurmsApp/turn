@@ -46,7 +46,7 @@ async fn main() -> Result<(), Error> {
                     let line = line.to_string().clone();
                     let cred: Vec<&str> = line.splitn(2, '=').collect();
 
-                    debug!(username = cred[0], "Added user.");
+                    debug!(username = cred[0], "added user");
                     authentificator.add_user(
                         cred[0].to_owned(),
                         cred[1].to_owned(),
@@ -54,7 +54,7 @@ async fn main() -> Result<(), Error> {
                     );
                 }
             },
-            Err(_) => error!(path = path, "Cannot find file."),
+            Err(_) => error!(path = path, "cannot find path"),
         }
     }
 
@@ -66,19 +66,19 @@ async fn main() -> Result<(), Error> {
                 .is_err()
             {
                 error!(
-                    "JWT key is not valid; make sure you used the public key."
+                    "jwt key is not valid; make sure you used the public key"
                 )
             }
         } else {
             // However, it MUST be a path.
             if authentificator.public_key(Key::Path(key)).is_err() {
-                error!("JWT key is not valid: is the path valid? is it the public key?")
+                error!("jwt key is not valid, double check `JWT_PUBLIC_KEY` environment variable")
             }
         }
     }
 
     let conn = Arc::new(UdpSocket::bind(format!("0.0.0.0:{port}")).await?);
-    info!("Listening to UDP on {}", conn.local_addr()?);
+    info!("listening to UDP on {}", conn.local_addr()?);
 
     let server = Server::new(ServerConfig {
         conn_configs: vec![ConnConfig {
@@ -97,7 +97,7 @@ async fn main() -> Result<(), Error> {
     .await?;
 
     signal::ctrl_c().await.expect("failed to listen for event");
-    info!("\nClosing TURN server");
+    info!("closing TURN server");
     server.close().await?;
 
     Ok(())
