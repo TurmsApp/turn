@@ -1,6 +1,6 @@
 [package]
 name = "turn"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [profile.release]
@@ -20,7 +20,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 prometheus = "0.14"
 lazy_static = "1.5"
-libturms = { git = "https://github.com/TurmsApp/libturms#8661096" }
+libturms = { git = "https://github.com/TurmsApp/libturms" }
 opentelemetry = { version = "0.28.0", features = ["trace"] }
 opentelemetry_sdk = "0.28.0"
 opentelemetry-otlp = { version="0.28.0",  features = ["grpc-tonic", "metrics"] }
