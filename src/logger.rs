@@ -12,12 +12,26 @@ use tracing_subscriber::util::SubscriberInitExt;
 pub fn init_logging(otel: Option<String>) -> Result<(), LogError> {
     let fmt_layer = fmt::layer().with_file(true).with_line_number(true);
 
-    let sub = tracing_subscriber::registry().with(fmt_layer);
+    let level = if cfg!(debug_assertions) {
+        "debug"
+    } else {
+        "info"
+    };
+    let sub = tracing_subscriber::registry().with(
+        tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
+            format!(
+                "{}={level}",
+                env!("CARGO_CRATE_NAME")
+            )
+            .into()
+        }),
+    ).with(fmt_layer);
 
     if let Some(addr) = otel {
         let logging_layer = setup_logging(&addr)?;
         sub.with(logging_layer).init();
     } else {
+        println!("no telemetry");
         sub.init();
     }
 
@@ -33,6 +47,7 @@ pub fn setup_logging(
     endpoint: &str,
 ) -> Result<OpenTelemetryTracingBridge<SdkLoggerProvider, SdkLogger>, LogError>
 {
+    println!("{endpoint:?}");
     let exporter = LogExporter::builder()
         .with_tonic()
         .with_endpoint(endpoint)
