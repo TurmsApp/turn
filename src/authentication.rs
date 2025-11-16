@@ -8,6 +8,7 @@ use std::path::Path;
 use turn::auth::*;
 use turn::Error;
 
+/// Convert string to JWA.
 pub fn string_to_algorithm(algo: String) -> Algorithm {
     match algo.to_uppercase().as_str() {
         "ES256" => Algorithm::ES256,
@@ -22,7 +23,7 @@ pub fn string_to_algorithm(algo: String) -> Algorithm {
         "RS256" => Algorithm::RS256,
         "RS384" => Algorithm::RS384,
         "RS512" => Algorithm::RS512,
-        _ => Algorithm::RS256,
+        _ => Algorithm::ES256,
     }
 }
 

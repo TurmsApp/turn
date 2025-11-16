@@ -31,7 +31,6 @@ pub fn init_logging(otel: Option<String>) -> Result<(), LogError> {
         let logging_layer = setup_logging(&addr)?;
         sub.with(logging_layer).init();
     } else {
-        println!("no telemetry");
         sub.init();
     }
 
